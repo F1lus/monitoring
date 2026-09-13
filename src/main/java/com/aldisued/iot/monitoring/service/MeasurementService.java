@@ -6,13 +6,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MeasurementService {
 
   private final SensorReadingRepository sensorReadingRepository;
 
-  public MeasurementService(SensorReadingRepository sensorReadingRepository) {
+  public MeasurementService(final SensorReadingRepository sensorReadingRepository) {
     this.sensorReadingRepository = sensorReadingRepository;
   }
 
@@ -22,9 +23,9 @@ public class MeasurementService {
     return List.of();
   }
 
-  public Optional<Double> getAverageTemperature(LocalDateTime from, LocalDateTime to) {
-    // TODO: Task 7
-    return Optional.empty();
+  @Transactional(readOnly = true)
+  public Optional<Double> getAverageTemperature(final LocalDateTime from, final LocalDateTime to) {
+    return sensorReadingRepository.getAverageTemperatureBetweenDates(from, to);
   }
 
 }
