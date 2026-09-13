@@ -17,10 +17,13 @@ public class MeasurementService {
     this.sensorReadingRepository = sensorReadingRepository;
   }
 
-  public List<Double> getMeasurementValuesBySensorType(SensorType sensorType, LocalDateTime from,
-      LocalDateTime to) {
-    // TODO: Task 8
-    return List.of();
+  @Transactional(readOnly = true)
+  public List<Double> getMeasurementValuesBySensorType(
+          final SensorType sensorType,
+          final LocalDateTime from,
+          final LocalDateTime to
+  ) {
+    return sensorReadingRepository.getMeasurementValuesBySensorTypeBetweenDates(sensorType, from, to);
   }
 
   @Transactional(readOnly = true)
